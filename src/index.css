@@ -1,68 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --primary: #1d9bf0;
+  --primary-hover: #1a8cd8;
+  --secondary: #ffd700;
+  --dark: #0f1419;
+  --light: #f7f9f9;
+  --success: #00ba7c;
+  --danger: #f91880;
+  --card-bg: #ffffff;
+  --card-border: #e0e0e0;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dark: #e7e9ea;
+    --light: #15202b;
+    --card-bg: #192734;
+    --card-border: #38444d;
+  }
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--light);
+  color: var(--dark);
+  transition: background-color 0.3s ease;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.btn-primary {
+  @apply bg-[#1d9bf0] text-white font-bold py-2 px-6 rounded-full;
+  transition: all 0.3s ease;
+  border: none;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.btn-primary:hover {
+  @apply bg-[#1a8cd8] scale-105;
+}
+
+.btn-primary:disabled {
+  @apply opacity-50 cursor-not-allowed;
+  transform: none;
+}
+
+.post-card {
+  @apply p-4 mb-4 bg-white rounded-xl border border-gray-200 shadow-sm;
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+  transition: all 0.3s ease;
+}
+
+.post-card:hover {
+  @apply shadow-md;
+  transform: translateY(-2px);
+}
+
+.avatar {
+  @apply w-12 h-12 rounded-full border-2 object-cover flex items-center justify-center text-white font-bold;
+  border-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.reaction-btn {
+  @apply p-2 rounded-full border-none bg-transparent cursor-pointer flex items-center gap-1;
+  transition: all 0.2s ease;
+}
+
+.reaction-btn:hover {
+  transform: scale(1.1);
+}
+
+.heart-btn:hover {
+  color: var(--danger);
+  background-color: rgba(249, 24, 128, 0.1);
+}
+
+.heart-btn.liked {
+  color: var(--danger);
+  animation: pulse 0.5s;
+}
+
+.repost-btn:hover {
+  color: var(--success);
+  background-color: rgba(0, 186, 124, 0.1);
+}
+
+.repost-btn.reposted {
+  color: var(--success);
+}
+
+.comment-btn:hover {
+  color: var(--primary);
+  background-color: rgba(29, 155, 240, 0.1);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full;
+  background-color: var(--primary);
+}
+
+.input-field {
+  @apply w-full p-3 rounded-lg border focus:outline-none bg-white;
+  border-color: var(--card-border);
+  background-color: var(--card-bg);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  resize: none;
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(29, 155, 240, 0.2);
+}
+
+.char-counter {
+  @apply text-sm text-gray-600;
+}
+
+.char-counter.warning {
+  @apply text-yellow-500;
+}
+
+.char-counter.error {
+  color: var(--danger);
+}
+
+.trending-item {
+  @apply p-3 rounded-lg cursor-pointer;
+  transition: all 0.2s ease;
+}
+
+.trending-item:hover {
+  @apply bg-gray-50;
+}
+
+.trending-tag {
+  @apply font-bold;
+  color: var(--primary);
+}
+
+.nav-item {
+  @apply flex items-center gap-4 p-3 rounded-full w-full border-none bg-transparent cursor-pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.nav-item.active {
+  @apply font-bold;
+  color: var(--primary);
+}
+
+.nav-item:hover:not(.active) {
+  @apply bg-gray-100;
+}
+
+.spinner {
+  @apply w-8 h-8 border-4 rounded-full;
+  border-color: var(--primary);
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.glass-effect {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.username {
+  @apply font-semibold;
+  color: var(--primary);
+}
+
+.post-content {
+  @apply leading-relaxed my-2;
+  color: var(--dark);
+}
+
+.timestamp {
+  @apply text-sm text-gray-500;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .trending-item:hover {
+    @apply bg-gray-700;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+  
+  .nav-item:hover:not(.active) {
+    @apply bg-gray-700;
   }
 }
+
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-full border-none cursor-pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  @apply bg-gray-300 scale-105;
+}
+
+
+.loading-skeleton {
+  @apply bg-gray-200 rounded animate-pulse;
+}
+
+
+.notification {
+  @apply fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.notification.success {
+  @apply border-green-500 bg-green-50;
+}
+
+.notification.error {
+  @apply border-red-500 bg-red-50;
+}
+
+
+@media (max-width: 768px) {
+  .post-card {
+    @apply mx-2;
+  }
+  
+  .avatar {
+    @apply w-10 h-10;
+  }
+  
+  .reaction-btn {
+    @apply p-1;
+  }
+}
+
+
+.btn-primary:focus,
+.nav-item:focus,
+.reaction-btn:focus {
+  @apply outline-2 outline-blue-500 outline-offset-2;
+}
+
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.new-post {
+  animation: slideInFromTop 0.5s ease-out;
+}
+
+
+.profile-suggestion {
+  @apply p-3 rounded-lg transition-all duration-200 cursor-pointer;
+}
+
+.profile-suggestion:hover {
+  @apply bg-gray-50 transform scale-105;
+}
+
+
+
+
+
